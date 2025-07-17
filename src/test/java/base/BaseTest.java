@@ -1,5 +1,6 @@
 package base;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
@@ -14,22 +15,23 @@ public class BaseTest {
 
     @BeforeMethod
     public void setUp() {
-        driver = new ChromeDriver();
-        driver.manage().window().maximize();
-        logger.info("Browser started and maximized");
-    }
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            logger.info("Browser started and maximized");
+        }
 
-    protected void openBaseUrl() {
-        String baseUrl = ConfigReader.getProperty("baseUrl");
-        logger.info("Navigating to: {}", baseUrl);
-        driver.get(baseUrl);
-    }
+        protected void openBaseUrl () {
+            String baseUrl = ConfigReader.getProperty("baseUrl");
+            logger.info("Navigating to: {}", baseUrl);
+            driver.get(baseUrl);
+        }
 
-    @AfterMethod
-    public void tearDown() {
-        if (driver != null) {
-            driver.quit();
-            logger.info("Browser closed");
+        @AfterMethod
+        public void tearDown () {
+            if (driver != null) {
+                driver.quit();
+                logger.info("Browser closed");
+            }
         }
     }
-}

@@ -1,20 +1,27 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class HomePage {
+public class HomePage extends BasePage {
 
-    private final WebDriver driver;
 
-    // Locator for page heading
-    private final By heading = By.tagName("h1");
+    @FindBy(tagName = "h1")
+    private WebElement heading;
 
+    /**
+     * Constructor for BasePage.
+     *
+     * @param driver The WebDriver instance from the test.
+     */
     public HomePage(WebDriver driver) {
-        this.driver = driver;
+        super(driver);
     }
 
+
     public String getHeadingText() {
-        return driver.findElement(heading).getText();
+        return wait.until(ExpectedConditions.visibilityOf(heading)).getText();
     }
 }
